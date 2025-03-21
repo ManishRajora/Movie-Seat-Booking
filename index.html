@@ -105,6 +105,29 @@
     <p class="text">
         You have selected <span id="count">0</span> seats for a price of ₹ <span id="total">0</span>.
     </p>
+
+    <button class="confirm_btn">Confirm Booking</button>
+
+    <div class="payment_window">
+        <div class="payment_form">
+            <h3>Payment Details</h3>
+            <label for="amount">Amount: </label>
+            <input type="text" id="amount" readonly>
+
+            <label for="reciever">Payment To: </label>
+            <input type="text" id="reciever" value="Cineplex" readonly>
+
+            <label for="pin">Enter PIN: </label>
+            <input type="password" id="pin" required>
+            <br>
+            <input type="submit" value="Pay Now" class="payment_btn">
+        </div>
+
+        <div class="payment_success">
+            <h3>Payment Successful</h3>
+            <button class="close">Close</button>
+        </div>
+    </div>
 <script src="Movie_script.js"></script>
 </body>
 </html>
