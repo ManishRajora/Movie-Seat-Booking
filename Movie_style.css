@@ -148,6 +148,16 @@ span{
     display: block;
 }
 
+#amount, #reciever, #pin{
+    border-radius: 5px;
+    box-shadow: 0 0 6px 0 white;
+}
+
+#amount:focus, #reciever:focus, #pin:focus{
+    outline: none;
+    box-shadow: 0 0 6px 0 aqua;
+}
+
 .payment_btn{
     margin-top: 20px;
     background-color: aqua;

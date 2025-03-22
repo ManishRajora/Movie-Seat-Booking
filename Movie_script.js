@@ -6,10 +6,11 @@ const confirm_btn = document.querySelector('.confirm_btn');
 const payment_btn = document.querySelector('.payment_btn');
 const amount = document.getElementById('amount');
 const close_btn = document.querySelector('.close');
-const conatiner = document.querySelector('.container');
+const container = document.querySelector('.container');
 const payment_window = document.querySelector('.payment_window');
 const success_window = document.querySelector('.payment_success');
 const payment_form = document.querySelector('.payment_form');
+const pin = document.getElementById('pin');
 
 let ticket_price = parseInt(movie.value);
 let seat_count = 0;
@@ -31,7 +32,7 @@ movie.addEventListener('change', function(event){
 });
 
 // to toggle the selected seats
-conatiner.addEventListener('click', function(event){
+container.addEventListener('click', function(event){
     if(event.target.classList.contains('seat') && !event.target.classList.contains('occupied')){
         event.target.classList.toggle('selected');
         update_count();
@@ -47,8 +48,26 @@ confirm_btn.addEventListener('click', function(){
 });
 
 payment_btn.addEventListener('click', function(){
-    payment_form.style.display = 'none';
-    success_window.style.display = 'block';
+    if(pin.value){
+        payment_form.style.display = 'none';
+        success_window.style.display = 'block';
+
+        // set the selected seats to occupied
+        const selected_seats = document.querySelectorAll('.row .seat.selected');
+        selected_seats.forEach(function(seat){
+            seat.classList.remove('selected');
+            seat.classList.add('occupied');
+        });
+
+        // save the selected seats to local storage
+        const seat_index = [...selected_seats].map(function(seat){
+            return [...seat.parentElement.children].indexOf(seat);
+        });
+        localStorage.setItem('selected_seats', JSON.stringify(seat_index));
+
+    }else{
+        alert('Enter PIN to proceed');
+    }
 });
 
 close_btn.addEventListener('click', function(){
