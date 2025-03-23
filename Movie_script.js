@@ -1,5 +1,5 @@
 const movie = document.querySelector('.movie');
-const seat = document.querySelectorAll('.row .seat:not(.occupied)');
+const seats = document.querySelectorAll('.row .seat');
 const count = document.getElementById('count');
 const total = document.getElementById('total');
 const confirm_btn = document.querySelector('.confirm_btn');
@@ -64,6 +64,7 @@ payment_btn.addEventListener('click', function(){
             return [...seat.parentElement.children].indexOf(seat);
         });
         localStorage.setItem('selected_seats', JSON.stringify(seat_index));
+        localStorage.setItem('movieIndex', movie.selectedIndex);
 
     }else{
         alert('Enter PIN to proceed');
