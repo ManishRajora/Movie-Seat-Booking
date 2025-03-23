@@ -1,5 +1,5 @@
 const movie = document.querySelector('.movie');
-const seats = document.querySelectorAll('.row .seat');
+const seats = document.querySelectorAll('.row .seat:not(.occupied)');
 const count = document.getElementById('count');
 const total = document.getElementById('total');
 const confirm_btn = document.querySelector('.confirm_btn');
@@ -11,6 +11,8 @@ const payment_window = document.querySelector('.payment_window');
 const success_window = document.querySelector('.payment_success');
 const payment_form = document.querySelector('.payment_form');
 const pin = document.getElementById('pin');
+
+populateUI();
 
 let ticket_price = parseInt(movie.value);
 let seat_count = 0;
@@ -55,13 +57,12 @@ payment_btn.addEventListener('click', function(){
         // set the selected seats to occupied
         const selected_seats = document.querySelectorAll('.row .seat.selected');
         selected_seats.forEach(function(seat){
-            seat.classList.remove('selected');
-            seat.classList.add('occupied');
+            seat.classList.add('selected');
         });
 
         // save the selected seats to local storage
         const seat_index = [...selected_seats].map(function(seat){
-            return [...seat.parentElement.children].indexOf(seat);
+            return [...seats].indexOf(seat);
         });
         localStorage.setItem('selected_seats', JSON.stringify(seat_index));
         localStorage.setItem('movieIndex', movie.selectedIndex);
@@ -74,3 +75,18 @@ payment_btn.addEventListener('click', function(){
 close_btn.addEventListener('click', function(){
     location.reload();  
 });
+
+function populateUI(){
+    const selected_seats = JSON.parse(localStorage.getItem('selected_seats'));
+    if(selected_seats !== null && selected_seats.length > 0){
+        seats.forEach((seat, index) => {
+            if(selected_seats.indexOf(index) > -1){
+                seat.classList.add('selected');
+            }
+        });
+    }
+    const selected_movie = localStorage.getItem('movieIndex');
+    if(selected_movie !== null){
+        movie.selectedIndex = selected_movie;
+    }   
+}
